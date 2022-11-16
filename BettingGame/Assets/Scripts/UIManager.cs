@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button _btnHost;
     [SerializeField] private Button _btnClient;
 
+    [SerializeField] private TextMeshProUGUI _chipCount;
+
     // DEBUG NETWORKING -----------------------------------------
     [SerializeField] private TextMeshProUGUI _txtNetworkDebugger;
 
@@ -17,6 +19,8 @@ public class UIManager : MonoBehaviour
     {
         _btnHost.onClick.AddListener(StartHost);
         _btnClient.onClick.AddListener(StartClient);
+
+        EventManager.OnChipCountChanged += OnChipCountChanged;
 
         // DEBUG NETWORKING ------------------------------------------
         Application.logMessageReceived += Application_logMessageReceived;
@@ -38,5 +42,10 @@ public class UIManager : MonoBehaviour
     private void StartHost() => NetworkManager.Singleton.StartHost();
 
     private void StartClient() => NetworkManager.Singleton.StartClient();
+
+    private void OnChipCountChanged(int newChipCount)
+    {
+        _chipCount.text = newChipCount.ToString();
+    }
 
 }

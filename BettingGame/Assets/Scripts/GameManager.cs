@@ -6,12 +6,15 @@ public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    private const int MaxPlayers = 2;
+    private const int StartingChips = 100;
+
     [SerializeField] private Transform _playerOnePosition;
     [SerializeField] private Transform _playerTwoPosition;
 
     [SerializeField] private GameObject _bettingButtonsPanel;
 
-    private const int MaxPlayers = 2;
+    private NetworkVariable<int> _chipCount = new NetworkVariable<int>();
 
     public Transform PlayerOnePosition { get { return _playerOnePosition; } }
     public Transform PlayerTwoPosition { get { return _playerTwoPosition; } }
@@ -28,8 +31,12 @@ public class GameManager : NetworkBehaviour
     {
         base.OnNetworkSpawn();
 
-        if(IsServer)
+        if (IsServer)
+        {
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
+        }
+
+        _chipCount.OnValueChanged += ChipValueChanged;
     }
 
     public override void OnNetworkDespawn()
@@ -43,7 +50,15 @@ public class GameManager : NetworkBehaviour
     private void OnClientConnectedCallback(ulong obj)
     {
         if (NetworkManager.Singleton.ConnectedClientsList.Count == MaxPlayers)
+        {
             ShowButtonPanelClientRPC();
+            _chipCount.Value = StartingChips;
+        }
+    }
+
+    private void ChipValueChanged(int previousValue, int newValue)
+    {
+        EventManager.ChipCountChanged(newValue);
     }
 
     [ClientRpc]
