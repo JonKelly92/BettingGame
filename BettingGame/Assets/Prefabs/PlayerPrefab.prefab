@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 8024059097837793981}
   - component: {fileID: -1044818690154525919}
   - component: {fileID: 440693419368089584}
+  - component: {fileID: 7247985928908069935}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -264,7 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 353ed12784ef6cb47b8d62bfe619617f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chipStackLocations:
+  _chipStackLocations:
   - {fileID: 293062299751254478}
   - {fileID: 2439096901926220217}
   - {fileID: 965075638579857282}
@@ -275,6 +276,32 @@ MonoBehaviour:
   - {fileID: 3385415794122829402}
   - {fileID: 3862855132470944849}
   - {fileID: 2206701001469878896}
+--- !u!114 &7247985928908069935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4505678596409373065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5154c4001b37c6740a45926e5826b585, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncPositionX: 1
+  SyncPositionY: 0
+  SyncPositionZ: 0
+  SyncRotAngleX: 0
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 0
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  InLocalSpace: 0
+  Interpolate: 1
 --- !u!1 &4851206102969030478
 GameObject:
   m_ObjectHideFlags: 0
