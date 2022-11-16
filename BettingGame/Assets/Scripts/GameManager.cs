@@ -8,6 +8,10 @@ public class GameManager : NetworkBehaviour
 
     private const int MaxPlayers = 2;
     private const int StartingChips = 100;
+    private const int TimerLength = 10;
+
+
+    [SerializeField] private Timer _timer;
 
     [SerializeField] private Transform _playerOnePosition;
     [SerializeField] private Transform _playerTwoPosition;
@@ -53,6 +57,8 @@ public class GameManager : NetworkBehaviour
         {
             ShowButtonPanelClientRPC();
             _chipCount.Value = StartingChips;
+
+            _timer.StartTimer(TimerLength);
         }
     }
 
