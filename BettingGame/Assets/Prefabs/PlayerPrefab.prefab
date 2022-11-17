@@ -251,6 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 353ed12784ef6cb47b8d62bfe619617f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _chipStackPrefab: {fileID: 9105112906084318842, guid: ca84486a813512a49a6f3215b0ceef25, type: 3}
   _selectedBetColor: {fileID: 8211836658638509340}
   _chipStackLocations:
   - {fileID: 293062299751254478}

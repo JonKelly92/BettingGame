@@ -8,7 +8,7 @@ public class ChipFactory : NetworkBehaviour
 
     [SerializeField] private ChipStack _chipStackPrefab;
 
-    private List<ChipStack> _chipStackList;
+    public List<ChipStack> ChipStackList { get; private set; }
 
     private void Awake()
     {
@@ -18,19 +18,19 @@ public class ChipFactory : NetworkBehaviour
             Instance = this;
     }
 
-    public List<ChipStack> CreateChipStacks(List<Transform> chipStackLocations)
-    {
-        _chipStackList = new List<ChipStack>();
-        ChipStack spawnedObject = null;
+    //public List<ChipStack> CreateChipStacks(List<Transform> chipStackLocations)
+    //{
+    //    ChipStackList = new List<ChipStack>();
+    //    ChipStack spawnedObject = null;
 
-        for (int i = 0; i < chipStackLocations.Count; i++)
-        {
-            spawnedObject = Instantiate(_chipStackPrefab);
-            spawnedObject.transform.position = chipStackLocations[i].position;
+    //    for (int i = 0; i < chipStackLocations.Count; i++)
+    //    {
+    //        spawnedObject = Instantiate(_chipStackPrefab);
+    //        spawnedObject.transform.position = chipStackLocations[i].position;
 
-            _chipStackList.Add(spawnedObject);
-        }
+    //        ChipStackList.Add(spawnedObject);
+    //    }
 
-        return _chipStackList;
-    }
+    //    return ChipStackList;
+    //}
 }
