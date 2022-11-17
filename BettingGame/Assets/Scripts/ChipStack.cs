@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class ChipStack : MonoBehaviour
@@ -8,6 +9,13 @@ public class ChipStack : MonoBehaviour
     {
         chipRenderers = GetComponentsInChildren<MeshRenderer>();
     }
+
+    //public override void OnNetworkSpawn()
+    //{
+    //    base.OnNetworkSpawn();
+
+    //    SetColors();
+    //}
 
     private void Start()
     {
