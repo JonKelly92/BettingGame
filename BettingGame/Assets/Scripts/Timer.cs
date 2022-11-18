@@ -27,12 +27,12 @@ public class Timer : MonoBehaviour
 
         if (_timeRemaining <= 0)
         {
-            _formattedTime = "0.0";
+            _formattedTime = "0";
             _stopTimer = true;
             EventManager.TimerEnded();
         }
         else
-            _formattedTime = _timeRemaining.ToString("0.00");
+            _formattedTime = _timeRemaining.ToString("0");
 
         UIManager.Instance.UpdateTimer(_formattedTime);
     }

@@ -10,7 +10,7 @@ public class Player : NetworkBehaviour
 
     private void Awake()
     {
-        EventManager.OnBetMade += OnBetMade;
+        EventManager.OnBetColorChanged += OnBetColorChanged;
 
         _netColor.OnValueChanged += OnValueChanged;
     }
@@ -19,7 +19,7 @@ public class Player : NetworkBehaviour
     {
         base.OnDestroy();
 
-        EventManager.OnBetMade -= OnBetMade;
+        EventManager.OnBetColorChanged -= OnBetColorChanged;
 
         _netColor.OnValueChanged -= OnValueChanged;
     }
@@ -34,7 +34,7 @@ public class Player : NetworkBehaviour
             transform.SetPositionAndRotation(GameManager.Instance.PlayerTwoPosition.position, GameManager.Instance.PlayerTwoPosition.rotation);
     }
 
-    private void OnBetMade(ColorBet bet)
+    private void OnBetColorChanged(ColorBet bet)
     {
         if (!IsOwner)
             return;

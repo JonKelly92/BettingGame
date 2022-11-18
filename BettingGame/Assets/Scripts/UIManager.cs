@@ -64,20 +64,13 @@ public class UIManager : NetworkBehaviour
 
     private void OnChipCountChanged(int newChipCount)
     {
-        if(IsServer)
-            UpdateChipCountClientRPC(newChipCount.ToString());
+        _chipCount.text = newChipCount.ToString();
     }
 
     public void UpdateTimer(string time)
     {
        if(IsServer)
             UpdateTimerClientRPC(time);
-    }
-
-    [ClientRpc]
-    private void UpdateChipCountClientRPC(string chipCount)
-    {
-        _chipCount.text = chipCount;
     }
 
     [ClientRpc]

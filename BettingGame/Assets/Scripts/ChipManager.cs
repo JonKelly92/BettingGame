@@ -64,8 +64,10 @@ public class ChipManager : NetworkBehaviour
 
         if (_chipStackList.Count == 0)
         {
+           // Debug.Log("FIRST SPAWN");
+
             // spawn first stack here -> _chipSpawnRefrencePoint
-            SpawnChipsServerRPC(_chipSpawnRefrencePoint.position);
+            SpawnChipsServerRPC(_chipSpawnRefrencePoint.localPosition);
         }
         else
         {
@@ -73,7 +75,7 @@ public class ChipManager : NetworkBehaviour
             {
                 // we haven't got to the end of this row so lets add another stack
                 // get the last stack added to the list and create another stack next to it
-                Vector3 position = _chipStackList.Last().transform.position;
+                Vector3 position = _chipStackList.Last().transform.localPosition;
                 SpawnChipsServerRPC(new Vector3(
                     position.x,
                     position.y, 
@@ -87,9 +89,9 @@ public class ChipManager : NetworkBehaviour
                 int numberOfRows = (int)(_chipStackList.Count / MaxStacksPerRow);
                 float distanceForward = (numberOfRows * _stackWidth) + (numberOfRows * StackSpacing);
                 SpawnChipsServerRPC(new Vector3(
-                    _chipSpawnRefrencePoint.position.x + distanceForward, 
-                    _chipSpawnRefrencePoint.position.y, 
-                    _chipSpawnRefrencePoint.position.z));
+                    _chipSpawnRefrencePoint.localPosition.x + distanceForward, 
+                    _chipSpawnRefrencePoint.localPosition.y, 
+                    _chipSpawnRefrencePoint.localPosition.z));
             }
         }
     }
@@ -107,8 +109,8 @@ public class ChipManager : NetworkBehaviour
 
     private void CreateChipStack(Vector3 position)
     {
-        var spawnedObject = Instantiate(_chipStackPrefab);
-        spawnedObject.transform.position = position;
+        var spawnedObject = Instantiate(_chipStackPrefab, transform);
+        spawnedObject.transform.localPosition = position;
         _chipStackList.Add(spawnedObject);
     }
 }

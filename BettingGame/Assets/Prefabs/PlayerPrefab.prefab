@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 7247985928908069935}
   - component: {fileID: 440693419368089584}
   - component: {fileID: 6414603438574801643}
+  - component: {fileID: 8338141046573180758}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -190,6 +191,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _chipStackPrefab: {fileID: 9105112906084318842, guid: ca84486a813512a49a6f3215b0ceef25, type: 3}
   _chipSpawnRefrencePoint: {fileID: 293062299751254478}
+--- !u!114 &8338141046573180758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4505678596409373065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09fd353e001f4f24c8c5bb804de4d8b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5600644431594465537
 GameObject:
   m_ObjectHideFlags: 0

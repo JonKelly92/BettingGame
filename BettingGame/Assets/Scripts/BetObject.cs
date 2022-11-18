@@ -14,11 +14,26 @@ public class BetObject : NetworkBehaviour
 
     private void OnTimerEnded()
     {
-        int randomNumber = Random.Range(0, 2);
+
+
+        //if (IsServer)
+        //    ChangeColorClientRPC(randomNumber);
 
         if (IsServer)
+        {
+            int randomNumber = Random.Range(0, 2);
+
             ChangeColorClientRPC(randomNumber);
+
+            //RandomColorClientRpc((ColorBet)randomNumber);
+        }
     }
+
+    //[ClientRpc]
+    //private void RandomColorClientRpc(ColorBet bet)
+    //{
+    //    BetManager.Instance.BetResult(bet);
+    //}
 
     [ClientRpc]
     private void ChangeColorClientRPC(int randomNumber)

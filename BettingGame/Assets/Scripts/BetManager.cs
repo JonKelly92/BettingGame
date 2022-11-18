@@ -1,3 +1,5 @@
+using Newtonsoft.Json.Bson;
+using System.Diagnostics;
 using Unity.Netcode;
 
 public enum ColorBet
@@ -17,7 +19,7 @@ public class BetManager : NetworkBehaviour
 {
     public static BetManager Instance { get; private set; }
 
-    private NetworkVariable<ColorBet> _colorBet = new NetworkVariable<ColorBet>();
+    private ColorBet _colorBet;
 
     private void Awake()
     {
@@ -28,29 +30,40 @@ public class BetManager : NetworkBehaviour
 
         EventManager.OnBetMade += OnBetMade;
 
-        _colorBet.Value = ColorBet.None;
+        OnBetColorChanged(ColorBet.None);
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+
+        EventManager.OnBetMade -= OnBetMade;
     }
 
     private void OnBetMade(ColorBet bet)
     {
-        if (IsOwner)
-            UpdateColorBetServerRPC(bet);
+        OnBetColorChanged(bet);
     }
 
     public void BetResult(ColorBet bet)
     {
-        if (bet == ColorBet.None || bet != _colorBet.Value)
-            EventManager.BettingResult(BettingResult.Lose);
-        else
-            EventManager.BettingResult(BettingResult.Win);
+        UnityEngine.Debug.Log("Player : " + NetworkManager.Singleton.LocalClientId + ", bet color: " + _colorBet.ToString() + " -- obj color : " + bet.ToString());
 
-        if (IsOwner)
-            UpdateColorBetServerRPC(ColorBet.None);
+        if (_colorBet == ColorBet.None || bet != _colorBet)
+        {       
+            EventManager.BettingResult(BettingResult.Lose);
+        }
+        else
+        {
+            EventManager.BettingResult(BettingResult.Win);
+        }
+
+       // OnBetColorChanged(ColorBet.None);
     }
 
-    [ServerRpc]
-    private void UpdateColorBetServerRPC(ColorBet bet)
+    private void OnBetColorChanged (ColorBet bet)
     {
-        _colorBet.Value = bet;
+        _colorBet = bet;
+        EventManager.BetColorChanged(_colorBet);
     }
 }
