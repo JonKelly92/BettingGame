@@ -21,6 +21,7 @@ public class Player : NetworkBehaviour
         _chipStackList = new List<ChipStack>();
 
         EventManager.OnBetMade += OnBetMade;
+        EventManager.OnSpawnChips += OnSpawnChips;
 
         _netColor.OnValueChanged += OnValueChanged;
     }
@@ -30,6 +31,8 @@ public class Player : NetworkBehaviour
         base.OnDestroy();
 
         EventManager.OnBetMade -= OnBetMade;
+        EventManager.OnSpawnChips -= OnSpawnChips;
+
         _netColor.OnValueChanged -= OnValueChanged;
     }
 
@@ -42,11 +45,17 @@ public class Player : NetworkBehaviour
         else
             transform.SetPositionAndRotation(GameManager.Instance.PlayerTwoPosition.position, GameManager.Instance.PlayerTwoPosition.rotation);
 
+        //if (IsOwner)
+        //{
+        //    SpawnChipsServerRPC(_chipStackLocations[0].position);
+        //}
+    }
+
+    private void OnSpawnChips()
+    {
         if (IsOwner)
         {
             SpawnChipsServerRPC(_chipStackLocations[0].position);
-
-            CreateChipStack(_chipStackLocations[0].position);
         }
     }
 
@@ -85,8 +94,7 @@ public class Player : NetworkBehaviour
     [ClientRpc]
     private void SpawnChipsClientRpc(Vector3 position)
     {
-        if (!IsOwner)
-            CreateChipStack(position);
+        CreateChipStack(position);
     }
 
     private void CreateChipStack(Vector3 position)

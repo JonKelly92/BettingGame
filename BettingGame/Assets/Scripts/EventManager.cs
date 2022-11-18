@@ -13,4 +13,7 @@ public static class EventManager
 
     public static event Action<BettingResult> OnBettingResult;
     public static void BettingResult(BettingResult result) => OnBettingResult?.Invoke(result);
+
+    public static event Action OnSpawnChips;
+    public static void SpawnChips() => OnSpawnChips?.Invoke();
 }

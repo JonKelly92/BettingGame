@@ -84,6 +84,9 @@ public class GameManager : NetworkBehaviour
     private void ShowButtonPanelClientRPC()
     {
         _bettingButtonsPanel.SetActive(true);
+
+        // DEBUG ---------------
+        EventManager.SpawnChips();
     }
 
     private void ChipValueChanged(int newValue)
