@@ -1,27 +1,16 @@
-using System;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
 
 public class Player : NetworkBehaviour
 {
-    [SerializeField] private ChipStack _chipStackPrefab;
-
     [SerializeField] private Renderer _selectedBetColor;
-
-    [SerializeField] private List<Transform> _chipStackLocations = new List<Transform>();
-
-    private List<ChipStack> _chipStackList;
 
     private readonly NetworkVariable<Color> _netColor = new();
 
     private void Awake()
     {
-        _chipStackList = new List<ChipStack>();
-
         EventManager.OnBetMade += OnBetMade;
-        EventManager.OnSpawnChips += OnSpawnChips;
 
         _netColor.OnValueChanged += OnValueChanged;
     }
@@ -31,7 +20,6 @@ public class Player : NetworkBehaviour
         base.OnDestroy();
 
         EventManager.OnBetMade -= OnBetMade;
-        EventManager.OnSpawnChips -= OnSpawnChips;
 
         _netColor.OnValueChanged -= OnValueChanged;
     }
@@ -44,19 +32,6 @@ public class Player : NetworkBehaviour
             transform.SetPositionAndRotation(GameManager.Instance.PlayerOnePosition.position, GameManager.Instance.PlayerOnePosition.rotation);
         else
             transform.SetPositionAndRotation(GameManager.Instance.PlayerTwoPosition.position, GameManager.Instance.PlayerTwoPosition.rotation);
-
-        //if (IsOwner)
-        //{
-        //    SpawnChipsServerRPC(_chipStackLocations[0].position);
-        //}
-    }
-
-    private void OnSpawnChips()
-    {
-        if (IsOwner)
-        {
-            SpawnChipsServerRPC(_chipStackLocations[0].position);
-        }
     }
 
     private void OnBetMade(ColorBet bet)
@@ -83,23 +58,5 @@ public class Player : NetworkBehaviour
     private void UpdateBetColorServerRpc(Color color)
     {
         _netColor.Value = color;
-    }
-
-    [ServerRpc]
-    private void SpawnChipsServerRPC(Vector3 position)
-    {
-        SpawnChipsClientRpc(position);
-    }
-
-    [ClientRpc]
-    private void SpawnChipsClientRpc(Vector3 position)
-    {
-        CreateChipStack(position);
-    }
-
-    private void CreateChipStack(Vector3 position)
-    {
-        var spawnedObject = Instantiate(_chipStackPrefab);
-        spawnedObject.transform.position = position;
     }
 }
