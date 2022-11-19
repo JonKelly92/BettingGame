@@ -14,12 +14,12 @@ public class UIManager : NetworkBehaviour
     [SerializeField] private Button _btnGreen;
     [SerializeField] private Button _btnRed;
 
+    [SerializeField] private Button _btnDecreaseBet;
+    [SerializeField] private Button _btnIncreaseBet;
+
+    [SerializeField] private TextMeshProUGUI _wagerAmount;
     [SerializeField] private TextMeshProUGUI _chipCount;
     [SerializeField] private TextMeshProUGUI _timer;
-
-    // DEBUG NETWORKING -----------------------------------------
-    [SerializeField] private TextMeshProUGUI _txtNetworkDebugger;
-
 
     private void Awake()
     {
@@ -32,19 +32,12 @@ public class UIManager : NetworkBehaviour
         _btnClient.onClick.AddListener(StartClient);
         _btnGreen.onClick.AddListener(GreenBet);
         _btnRed.onClick.AddListener(RedBet);
+        _btnDecreaseBet.onClick.AddListener(DecreaseBet);
+        _btnIncreaseBet.onClick.AddListener(IncreaseBet);
 
         EventManager.OnChipCountChanged += OnChipCountChanged;
-
-        // DEBUG NETWORKING ------------------------------------------
-        Application.logMessageReceived += Application_logMessageReceived;
+        EventManager.OnWagerAmountChanged += OnWagerAmountChanged;
     }
-
-    // DEBUG NETWORKING ------------------------------------------
-    private void Application_logMessageReceived(string condition, string stackTrace, LogType type)
-    {
-        _txtNetworkDebugger.text += condition + Environment.NewLine;
-    }
-    // ---------------------------------------------------
 
     public override void OnDestroy()
     {
@@ -52,8 +45,13 @@ public class UIManager : NetworkBehaviour
 
         _btnHost.onClick.RemoveAllListeners();
         _btnClient.onClick.RemoveAllListeners();
-        _btnGreen.onClick.RemoveAllListeners(); ;
+        _btnGreen.onClick.RemoveAllListeners();
         _btnRed.onClick.RemoveAllListeners();
+        _btnDecreaseBet.onClick.RemoveAllListeners();
+        _btnIncreaseBet.onClick.RemoveAllListeners();
+
+        EventManager.OnChipCountChanged -= OnChipCountChanged;
+        EventManager.OnWagerAmountChanged -= OnWagerAmountChanged;
     }
 
     private void StartHost() => NetworkManager.Singleton.StartHost();
@@ -62,10 +60,11 @@ public class UIManager : NetworkBehaviour
     private void GreenBet() => EventManager.BetMade(ColorBet.Green);
     private void RedBet() => EventManager.BetMade(ColorBet.Red);
 
-    private void OnChipCountChanged(int newChipCount)
-    {
-        _chipCount.text = newChipCount.ToString();
-    }
+    private void DecreaseBet() => EventManager.BetDecrease();
+    private void IncreaseBet() => EventManager.BetIncrease();
+
+    private void OnChipCountChanged(int newChipCount) => _chipCount.text = newChipCount.ToString();
+    private void OnWagerAmountChanged(int wagerAmount) => _wagerAmount.text = wagerAmount.ToString();
 
     public void UpdateTimer(string time)
     {
