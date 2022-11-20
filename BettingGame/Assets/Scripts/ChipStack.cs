@@ -19,10 +19,10 @@ public class ChipStack : MonoBehaviour
 
     private void Start()
     {
-        SetColors();
+        SetColor();
     }
 
-    private void SetColors()
+    private void SetColor()
     {
         Color color = Random.ColorHSV();
 
