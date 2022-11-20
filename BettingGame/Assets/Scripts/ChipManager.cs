@@ -2,18 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
+using Unity.Netcode.Components;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class ChipManager : NetworkBehaviour
 {
-    [SerializeField] private ChipStack _chipStackPrefab;
+    [SerializeField] private NetworkObject _chipStackPrefab;
     [SerializeField] private Transform _chipSpawnRefrencePoint;
 
     private const float MaxStacksPerRow = 5f;
     private const float StackSpacing = 0.1f;
 
-    private List<ChipStack> _chipStackList;
+    private List<NetworkObject> _chipStackList;
 
     private float _stackWidth;
 
@@ -22,14 +24,26 @@ public class ChipManager : NetworkBehaviour
     {
         EventManager.OnSpawnChips += OnSpawnChips;
 
-        _chipStackList = new List<ChipStack>();
+        _chipStackList = new List<NetworkObject>();
 
         var renderer = _chipStackPrefab.GetComponentInChildren<Renderer>();
         if (renderer == null)
             Debug.LogError("Could not find the Renderer component in the ChipStackPrefab");
         else
             _stackWidth = renderer.bounds.size.x;
+
+        // DEBUG -------------------------------------
+        EventManager.OnBetMade += EventManager_OnBetMade;
     }
+
+
+    //DEBUG ------------------------
+    private void EventManager_OnBetMade(ColorBet obj)
+    {
+        if (IsOwner)
+            HideChipsServerRPC(1);
+    }
+    // ------------------------
 
     public override void OnDestroy()
     {
@@ -40,56 +54,39 @@ public class ChipManager : NetworkBehaviour
 
     private void OnSpawnChips()
     {
-        //if (IsServer)
-        //{
-        //    SpawnChips(Vector3.left); // DEBUG -----------------------------------
-        //}
-        //else
-        //{
         if (IsOwner)
-            SpawnChipsServerRPC(1, NetworkManager.Singleton.LocalClientId);
-        //}
-    }
-
-    //private void SpawnChips(Vector3 position, ulong clientID)
-    //{
-    //    var spawnedObject = Instantiate(_chipStackPrefab);
-    //    spawnedObject.transform.position = position;
-    //    spawnedObject.GetComponent<NetworkObject>().Spawn(true);
-
-    //    _chipStackList.Add(spawnedObject);
-    //    Debug.Log("count : " + _chipStackList.Count + 
-    //        ", ID : " + clientID.ToString() +
-    //        ", LocalID : " + NetworkManager.Singleton.LocalClientId.ToString());
-    //}
-
-    [ServerRpc]
-    private void SpawnChipsServerRPC(int amountOfStacks, ulong clientID)
-    {
-        SpawnChips(clientID);
-        SpawnChips(clientID);
-        SpawnChips(clientID);
-        SpawnChips(clientID);
-        SpawnChips(clientID);
-        SpawnChips(clientID);
+            SpawnChipsServerRPC(10);
     }
 
     [ServerRpc]
-    private void HideChipsServerRPC(int amountOfStacks, ulong clientID)
+    private void SpawnChipsServerRPC(int amountOfStacks)
     {
-
+        int i = 0;
+        while (i < amountOfStacks)
+        {
+            SpawnChips();
+            i++;
+        }
     }
 
-    private void SpawnChips(ulong clientID)
+    [ServerRpc]
+    private void HideChipsServerRPC(int amountOfStacks)
+    {
+        int i = 0;
+        while (i < amountOfStacks)
+        {
+            DespawnChipStack();
+            i++;
+        }
+    }
+
+    private void SpawnChips()
     {
         Vector3 spawnPosition;
 
         if (_chipStackList.Count == 0)
         {
-            // Debug.Log("FIRST SPAWN");
-
             // spawn first stack here -> _chipSpawnRefrencePoint
-           // SpawnChipsServerRPC(_chipSpawnRefrencePoint.localPosition);
             spawnPosition = _chipSpawnRefrencePoint.position;
         }
         else
@@ -99,11 +96,7 @@ public class ChipManager : NetworkBehaviour
                 // we haven't got to the end of this row so lets add another stack
                 // get the last stack added to the list and create another stack next to it
                 Vector3 position = _chipStackList.Last().transform.position;
-                //SpawnChipsServerRPC(new Vector3(
-                //    position.x,
-                //    position.y,
-                //    position.z - _stackWidth - StackSpacing));
-
+                float z = position.z - _stackWidth - StackSpacing;
                 spawnPosition = new Vector3(
                     position.x,
                     position.y,
@@ -116,11 +109,6 @@ public class ChipManager : NetworkBehaviour
                 // Then get the distance forward we should place the next stack -> (x * _stackWidth) + (x * StackSpacing) = distance to move
                 int numberOfRows = (int)(_chipStackList.Count / MaxStacksPerRow);
                 float distanceForward = (numberOfRows * _stackWidth) + (numberOfRows * StackSpacing);
-                //SpawnChipsServerRPC(new Vector3(
-                //    _chipSpawnRefrencePoint.localPosition.x + distanceForward,
-                //    _chipSpawnRefrencePoint.localPosition.y,
-                //    _chipSpawnRefrencePoint.localPosition.z));
-
                 spawnPosition = new Vector3(
                     _chipSpawnRefrencePoint.position.x + distanceForward,
                     _chipSpawnRefrencePoint.position.y,
@@ -133,8 +121,12 @@ public class ChipManager : NetworkBehaviour
         spawnedObject.GetComponent<NetworkObject>().Spawn(true);
 
         _chipStackList.Add(spawnedObject);
-        Debug.Log("count : " + _chipStackList.Count +
-            ", ID : " + clientID.ToString() +
-            ", LocalID : " + NetworkManager.Singleton.LocalClientId.ToString());
+    }
+
+    private void DespawnChipStack()
+    {
+        var stack = _chipStackList.Last();
+        _chipStackList.Remove(stack);
+        stack.Despawn();
     }
 }

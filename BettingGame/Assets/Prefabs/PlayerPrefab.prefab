@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6adfe0e701eb44d89210d3cbb312b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chipStackPrefab: {fileID: 9105112906084318842, guid: ca84486a813512a49a6f3215b0ceef25, type: 3}
+  _chipStackPrefab: {fileID: -5206007501026579512, guid: ca84486a813512a49a6f3215b0ceef25, type: 3}
   _chipSpawnRefrencePoint: {fileID: 293062299751254478}
 --- !u!1 &344670413
 GameObject:
@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _selectedBetColor: {fileID: 8211836658638509340}
+  _chipSpawnRefrencePoint: {fileID: 293062299751254478}
 --- !u!114 &8338141046573180758
 MonoBehaviour:
   m_ObjectHideFlags: 0

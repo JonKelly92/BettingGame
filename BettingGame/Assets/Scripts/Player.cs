@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : NetworkBehaviour
 {
     [SerializeField] private Renderer _selectedBetColor;
+    [SerializeField] private Transform _chipSpawnRefrencePoint;
 
     private readonly NetworkVariable<Color> _netColor = new();
 
@@ -31,7 +32,13 @@ public class Player : NetworkBehaviour
         if (IsServer)
             transform.SetPositionAndRotation(GameManager.Instance.PlayerOnePosition.position, GameManager.Instance.PlayerOnePosition.rotation);
         else
+        {
             transform.SetPositionAndRotation(GameManager.Instance.PlayerTwoPosition.position, GameManager.Instance.PlayerTwoPosition.rotation);
+            //_chipSpawnRefrencePoint.transform.position = new Vector3(
+            //    _chipSpawnRefrencePoint.transform.position.x,
+            //    _chipSpawnRefrencePoint.transform.position.y,
+            //    _chipSpawnRefrencePoint.transform.position.z * -1f);
+        }
     }
 
     private void OnBetColorChanged(ColorBet bet)
