@@ -95,7 +95,6 @@ GameObject:
   - component: {fileID: -1044818690154525919}
   - component: {fileID: 7247985928908069935}
   - component: {fileID: 440693419368089584}
-  - component: {fileID: 6414603438574801643}
   - component: {fileID: 8338141046573180758}
   m_Layer: 0
   m_Name: PlayerPrefab
@@ -177,20 +176,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _selectedBetColor: {fileID: 8211836658638509340}
---- !u!114 &6414603438574801643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4505678596409373065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd6adfe0e701eb44d89210d3cbb312b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _chipStackPrefab: {fileID: 9105112906084318842, guid: ca84486a813512a49a6f3215b0ceef25, type: 3}
-  _chipSpawnRefrencePoint: {fileID: 293062299751254478}
 --- !u!114 &8338141046573180758
 MonoBehaviour:
   m_ObjectHideFlags: 0

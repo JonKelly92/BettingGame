@@ -8,7 +8,6 @@ using UnityEngine.UIElements;
 public class ChipManager : NetworkBehaviour
 {
     [SerializeField] private ChipStack _chipStackPrefab;
-    [SerializeField] private Transform _chipSpawnRefrencePoint;
 
     private const float MaxStacksPerRow = 5f;
     private const float StackSpacing = 0.1f;
@@ -39,23 +38,23 @@ public class ChipManager : NetworkBehaviour
 
     private void OnSpawnChips()
     {
-        //if (!IsOwner) return;
+        //for (int i = 0; i < 10; i++)
+        //{
+        //    PrepareToSpawnChipStack();
+        //}
 
-        //float x = 0;
+        if (IsServer)
+            SpawnChipTestServerRpc();
 
-        //if (transform.position.x > 0)
-        //    x = 2f;
-        //else
-        //    x = -2f;
+    }
 
-        //SpawnChipsServerRPC(new Vector3(x, 0, 0));
-
-
-        for (int i = 0; i < 10; i++)
-        {
-            PrepareToSpawnChipStack();
-        }
-
+    //DEBUG --------------------------
+    [ServerRpc]
+    private void SpawnChipTestServerRpc()
+    {
+        var spawnedObject = Instantiate(_chipStackPrefab);
+        spawnedObject.transform.position = Vector3.zero;
+        spawnedObject.GetComponent<NetworkObject>().Spawn(true);
     }
 
     private void PrepareToSpawnChipStack()
@@ -64,10 +63,10 @@ public class ChipManager : NetworkBehaviour
 
         if (_chipStackList.Count == 0)
         {
-           // Debug.Log("FIRST SPAWN");
+            // Debug.Log("FIRST SPAWN");
 
             // spawn first stack here -> _chipSpawnRefrencePoint
-            SpawnChipsServerRPC(_chipSpawnRefrencePoint.localPosition);
+            // SpawnChipsServerRPC(_chipSpawnRefrencePoint.localPosition);
         }
         else
         {
@@ -78,7 +77,7 @@ public class ChipManager : NetworkBehaviour
                 Vector3 position = _chipStackList.Last().transform.localPosition;
                 SpawnChipsServerRPC(new Vector3(
                     position.x,
-                    position.y, 
+                    position.y,
                     position.z - _stackWidth - StackSpacing));
             }
             else
@@ -88,10 +87,10 @@ public class ChipManager : NetworkBehaviour
                 // Then get the distance forward we should place the next stack -> (x * _stackWidth) + (x * StackSpacing) = distance to move
                 int numberOfRows = (int)(_chipStackList.Count / MaxStacksPerRow);
                 float distanceForward = (numberOfRows * _stackWidth) + (numberOfRows * StackSpacing);
-                SpawnChipsServerRPC(new Vector3(
-                    _chipSpawnRefrencePoint.localPosition.x + distanceForward, 
-                    _chipSpawnRefrencePoint.localPosition.y, 
-                    _chipSpawnRefrencePoint.localPosition.z));
+                //SpawnChipsServerRPC(new Vector3(
+                //    _chipSpawnRefrencePoint.localPosition.x + distanceForward, 
+                //    _chipSpawnRefrencePoint.localPosition.y, 
+                //    _chipSpawnRefrencePoint.localPosition.z));
             }
         }
     }
