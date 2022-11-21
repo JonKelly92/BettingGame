@@ -1,6 +1,9 @@
 using Unity.Netcode;
 using UnityEngine;
 
+/// <summary>
+/// This is the object that is being bet on. It randomly changes color (either red or green)
+/// </summary>
 public class BetObject : NetworkBehaviour
 {
     private MeshRenderer _renderer;
@@ -12,29 +15,18 @@ public class BetObject : NetworkBehaviour
         _renderer = GetComponent<MeshRenderer>();
     }
 
+    // The round of betting has ended so a new color is chosen 
     private void OnTimerEnded()
     {
-
-
-        //if (IsServer)
-        //    ChangeColorClientRPC(randomNumber);
-
         if (IsServer)
         {
             int randomNumber = Random.Range(0, 2);
 
             ChangeColorClientRPC(randomNumber);
-
-            //RandomColorClientRpc((ColorBet)randomNumber);
         }
     }
 
-    //[ClientRpc]
-    //private void RandomColorClientRpc(ColorBet bet)
-    //{
-    //    BetManager.Instance.BetResult(bet);
-    //}
-
+    // The color of the object is updated and the BetManager is given the new color
     [ClientRpc]
     private void ChangeColorClientRPC(int randomNumber)
     {

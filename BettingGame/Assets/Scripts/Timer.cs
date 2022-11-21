@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// This class just counts down one second at a time from a given number and tells the UI to display it
+/// </summary>
 public class Timer : MonoBehaviour
 {
     private float _timeRemaining;

@@ -4,6 +4,9 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Manages all the UI elements (buttons, text, etc.)
+/// </summary>
 public class UIManager : NetworkBehaviour
 {
     public static UIManager Instance { get; private set; }
@@ -17,8 +20,8 @@ public class UIManager : NetworkBehaviour
     [SerializeField] private Button _btnDecreaseBet;
     [SerializeField] private Button _btnIncreaseBet;
 
-    [SerializeField] private TextMeshProUGUI _wagerAmount;
-    [SerializeField] private TextMeshProUGUI _chipCount;
+    [SerializeField] private TextMeshProUGUI _wagerAmount; // amount the player is wagering
+    [SerializeField] private TextMeshProUGUI _chipCount; // total amount of chips the player has
     [SerializeField] private TextMeshProUGUI _timer;
 
     private void Awake()
@@ -72,6 +75,7 @@ public class UIManager : NetworkBehaviour
             UpdateTimerClientRPC(time);
     }
 
+    // The server is telling all the clients to update their timer
     [ClientRpc]
     private void UpdateTimerClientRPC(string time)
     {

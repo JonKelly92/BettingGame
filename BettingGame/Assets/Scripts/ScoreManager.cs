@@ -1,13 +1,16 @@
 using Unity.Netcode;
 using UnityEngine;
 
+/// <summary>
+/// Handles the amount of chips the player has and how much they are wagering
+/// </summary>
 public class ScoreManager : NetworkBehaviour
 {
     private const int WagerIncrements = 10;
 
     private int _currentWager;
 
-    private int _chipCount;
+    private int _chipCount; // total amount of chips the player has
 
     private void Awake()
     {
@@ -27,6 +30,7 @@ public class ScoreManager : NetworkBehaviour
         EventManager.OnBetIncrease -= OnBetIncrease;
     }
 
+    // initialzes the players chips and wager
     private void OnAllPlayersConnected()
     {
         _chipCount = GameManager.StartingChips;
@@ -34,6 +38,7 @@ public class ScoreManager : NetworkBehaviour
         UpdateWagerAmount(WagerIncrements);
     }
 
+    // the player has either won or lost, now update their chips
     private void OnBettingResult(BettingResult result)
     {
         if (result == BettingResult.Lose)
@@ -50,6 +55,7 @@ public class ScoreManager : NetworkBehaviour
         UpdateWagerAmount(0);
     }
 
+    // increase the amount of chips being bet
     private void OnBetIncrease()
     {
         if(_currentWager >= _chipCount)
@@ -61,6 +67,7 @@ public class ScoreManager : NetworkBehaviour
         UpdateWagerAmount(_currentWager + WagerIncrements);
     }
 
+    // decrease the amount of chips being bet
     private void OnBetDecrease()
     {
         if (_chipCount <= 0)
@@ -74,21 +81,16 @@ public class ScoreManager : NetworkBehaviour
 
     private void UpdateChipCount()
     {
+        // broadcasts the amount of chips the player has
         EventManager.ChipCountChanged(_chipCount);
+        // updates the amount of chip stacks on the table to reflect the amount of chips the player has
         EventManager.UpdateChipStacks(_chipCount);
-
-        //if (IsServer)
-        //    UpdateChipStacksClientRpc(_chipCount);
     }
+
+    // updates the amount of chips being wagered
     private void UpdateWagerAmount(int newWager)
     {
         _currentWager = newWager;
         EventManager.WagerAmountChanged(_currentWager);
     }
-
-    //[ClientRpc]
-    //private void UpdateChipStacksClientRpc(int amountOfChips)
-    //{
-    //    EventManager.UpdateChipStacks(amountOfChips);
-    //}
 }

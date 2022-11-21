@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
 using Unity.Netcode;
-using Unity.Netcode.Components;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.UIElements;
 
+/// <summary>
+/// The class spawns and despawns stacks of chips 
+/// Spawning and despawning is controlled by the server
+/// </summary>
 public class ChipManager : NetworkBehaviour
 {
     [SerializeField] private NetworkObject _chipStackPrefab;
+
+    // Reference point A is used as the starting point for spawning stacks
     [SerializeField] private Transform _chipSpawnRefrencePoint_A;
+    // Reference point B is used to determing the direction to spawn rows of stacks (toward the center of the table)
     [SerializeField] private Transform _chipSpawnRefrencePoint_B;
 
     private const float MaxStacksPerRow = 5f;
@@ -19,12 +23,12 @@ public class ChipManager : NetworkBehaviour
 
     private List<NetworkObject> _chipStackList;
 
+    // width of the stack prefab, used to determine how far apart the stacks should be spawned
     private float _stackWidth;
 
     private void Awake()
     {
         EventManager.OnSpawnChips += OnSpawnChips;
-        // EventManager.OnChipCountChanged += OnChipCountChanged;
         EventManager.OnUpdateChipStacks += OnUpdateChipStacks;
 
         _chipStackList = new List<NetworkObject>();
@@ -34,25 +38,13 @@ public class ChipManager : NetworkBehaviour
             Debug.LogError("Could not find the Renderer component in the ChipStackPrefab");
         else
             _stackWidth = renderer.bounds.size.x;
-
-        // DEBUG -------------------------------------
-        // EventManager.OnBetMade += EventManager_OnBetMade;
     }
-
-    //DEBUG ------------------------
-    //private void EventManager_OnBetMade(ColorBet obj)
-    //{
-    //    if (IsOwner)
-    //        HideChipsServerRPC(1);
-    //}
-    // ------------------------
 
     public override void OnDestroy()
     {
         base.OnDestroy();
 
         EventManager.OnSpawnChips -= OnSpawnChips;
-        // EventManager.OnChipCountChanged -= OnChipCountChanged;
         EventManager.OnUpdateChipStacks -= OnUpdateChipStacks;
     }
 
@@ -65,6 +57,7 @@ public class ChipManager : NetworkBehaviour
         UpdateChipsServerRpc(newChipCount, _chipSpawnRefrencePoint_A.position, GetXDirection());
     }
 
+    // primarily used to initially spawn the stacks of chips at the start of the game
     private void OnSpawnChips(int amountOfChips)
     {
         if (!IsOwner)
@@ -74,6 +67,7 @@ public class ChipManager : NetworkBehaviour
         SpawnChipsServerRPC(amountOfStacks, _chipSpawnRefrencePoint_A.position, GetXDirection());
     }
 
+    // Asking the server to spawn our intial set of chip stacks
     [ServerRpc]
     private void SpawnChipsServerRPC(int amountOfStacks, Vector3 referencePoint_A, float xDirection)
     {
@@ -85,12 +79,11 @@ public class ChipManager : NetworkBehaviour
         }
     }
 
+
+    // Asking the server to update our stacks of chips to match our chip count
     [ServerRpc]
     private void UpdateChipsServerRpc(int newChipCount, Vector3 referencePoint_A, float xDirection)
     {
-        // DEBUG -----------------------------------------------------
-        Debug.Log("Update Chips : " + newChipCount.ToString());
-
         int stackCount = newChipCount / 10;
 
         if (_chipStackList.Count == stackCount)
@@ -111,6 +104,7 @@ public class ChipManager : NetworkBehaviour
         {
             // amount of stacks to despawn
             stackCount = _chipStackList.Count - stackCount;
+
             int i = 0;
             while (i < stackCount)
             {
@@ -120,6 +114,7 @@ public class ChipManager : NetworkBehaviour
         }
     }
 
+    // Spawns the chips in rows (a grid like pattern) starting from referencePoint_A moving toward the center of the table
     private void SpawnChips(Vector3 referencePoint_A, float xDirection)
     {
         Vector3 spawnPosition;
@@ -133,7 +128,7 @@ public class ChipManager : NetworkBehaviour
         {
             if (_chipStackList.Count % MaxStacksPerRow != 0)
             {
-                // we haven't got to the end of this row so lets add another stack
+                // we have not got to the end of this row so lets add another stack
                 // get the last stack added to the list and create another stack next to it
                 Vector3 position = _chipStackList.Last().transform.position;
                 float z = position.z - _stackWidth - StackSpacing;
@@ -144,7 +139,7 @@ public class ChipManager : NetworkBehaviour
             }
             else
             {
-                // we have gotten to the end of the row
+                // we are at the end of the row
                 // get the amount of rows so far by dividing the List.Count by MaxStacksPerRow (represented by x)
                 // Then get the distance forward we should place the next stack -> (x * _stackWidth) + (x * StackSpacing) = distance to move
                 // multiplied by xDirection so the rows move towards the center of the table
@@ -164,6 +159,7 @@ public class ChipManager : NetworkBehaviour
         _chipStackList.Add(spawnedObject);
     }
 
+    // stacks we no longer need get removed from the list and from the game
     private void DespawnChipStack()
     {
         var stack = _chipStackList.Last();
@@ -171,6 +167,7 @@ public class ChipManager : NetworkBehaviour
         stack.Despawn();
     }
 
+    // using _chipSpawnRefrencePoint_B and _chipSpawnRefrencePoint_A to determine which direction is the center of the table
     private float GetXDirection()
     {
         Vector3 directionVector = _chipSpawnRefrencePoint_B.position - _chipSpawnRefrencePoint_A.position;

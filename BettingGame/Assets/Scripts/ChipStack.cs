@@ -1,6 +1,9 @@
-using Unity.Netcode;
 using UnityEngine;
 
+/// <summary>
+/// This is the ChipStack prefab script
+/// It simply changes the color of the stack
+/// </summary>
 public class ChipStack : MonoBehaviour
 {
     private MeshRenderer[] chipRenderers;

@@ -1,5 +1,3 @@
-using Newtonsoft.Json.Bson;
-using System.Diagnostics;
 using Unity.Netcode;
 
 public enum ColorBet
@@ -15,10 +13,15 @@ public enum BettingResult
     Lose = 1
 }
 
+/// <summary>
+/// This class determines whether the player has won or lost the round of betting by comparing
+/// the color they bet on with the result (color of the object being bet on)
+/// </summary>
 public class BetManager : NetworkBehaviour
 {
     public static BetManager Instance { get; private set; }
 
+    // This is the color that the player bet on
     private ColorBet _colorBet;
 
     private void Awake()
@@ -40,15 +43,22 @@ public class BetManager : NetworkBehaviour
         EventManager.OnBetMade -= OnBetMade;
     }
 
+    // the player has chosen a color to bet on
     private void OnBetMade(ColorBet bet)
     {
         OnBetColorChanged(bet);
     }
 
+    // We store the color that was bet on and broadcast that this color has changed
+    private void OnBetColorChanged(ColorBet bet)
+    {
+        _colorBet = bet;
+        EventManager.BetColorChanged(_colorBet);
+    }
+
+    // We check to see if the player has won or lost by comparing the color they bet on to the color of the object
     public void BetResult(ColorBet bet)
     {
-        UnityEngine.Debug.Log("Player : " + NetworkManager.Singleton.LocalClientId + ", bet color: " + _colorBet.ToString() + " -- obj color : " + bet.ToString());
-
         if (_colorBet == ColorBet.None || bet != _colorBet)
         {       
             EventManager.BettingResult(BettingResult.Lose);
@@ -57,13 +67,5 @@ public class BetManager : NetworkBehaviour
         {
             EventManager.BettingResult(BettingResult.Win);
         }
-
-       // OnBetColorChanged(ColorBet.None);
-    }
-
-    private void OnBetColorChanged (ColorBet bet)
-    {
-        _colorBet = bet;
-        EventManager.BetColorChanged(_colorBet);
     }
 }
