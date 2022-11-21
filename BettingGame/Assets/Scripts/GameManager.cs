@@ -105,8 +105,5 @@ public class GameManager : NetworkBehaviour
 
     // When all players are ready then their chips are spawned
     [ClientRpc]
-    private void SpawnChipsClientRPC()
-    {
-        EventManager.SpawnChips(StartingChips);
-    }
+    private void SpawnChipsClientRPC() => EventManager.UpdateChipStacks(StartingChips);
 }

@@ -28,7 +28,6 @@ public class ChipManager : NetworkBehaviour
 
     private void Awake()
     {
-        EventManager.OnSpawnChips += OnSpawnChips;
         EventManager.OnUpdateChipStacks += OnUpdateChipStacks;
 
         _chipStackList = new List<NetworkObject>();
@@ -43,8 +42,6 @@ public class ChipManager : NetworkBehaviour
     public override void OnDestroy()
     {
         base.OnDestroy();
-
-        EventManager.OnSpawnChips -= OnSpawnChips;
         EventManager.OnUpdateChipStacks -= OnUpdateChipStacks;
     }
 
@@ -55,16 +52,6 @@ public class ChipManager : NetworkBehaviour
             return;
 
         UpdateChipsServerRpc(newChipCount, _chipSpawnRefrencePoint_A.position, GetXDirection());
-    }
-
-    // primarily used to initially spawn the stacks of chips at the start of the game
-    private void OnSpawnChips(int amountOfChips)
-    {
-        if (!IsOwner)
-            return;
-
-        int amountOfStacks = amountOfChips / 10;
-        SpawnChipsServerRPC(amountOfStacks, _chipSpawnRefrencePoint_A.position, GetXDirection());
     }
 
     // Asking the server to spawn our intial set of chip stacks
