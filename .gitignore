@@ -60,3 +60,149 @@ crashlytics-build.properties
 Icon?
 ehthumbs.db
 Thumbs.db
+BettingGame_clone_0/.clone
+BettingGame_clone_0/.parrelsyncarg
+BettingGame_clone_0/.vsconfig
+BettingGame_clone_0/collabignore.txt
+BettingGame_clone_0/Assets/GameScene.unity
+BettingGame_clone_0/Assets/GameScene.unity.meta
+BettingGame_clone_0/Assets/Prefabs.meta
+BettingGame_clone_0/Assets/Resources.meta
+BettingGame_clone_0/Assets/Scenes.meta
+BettingGame_clone_0/Assets/Scripts.meta
+BettingGame_clone_0/Assets/TextMesh Pro.meta
+BettingGame_clone_0/Assets/Prefabs/ChipStackPrefab.prefab
+BettingGame_clone_0/Assets/Prefabs/ChipStackPrefab.prefab.meta
+BettingGame_clone_0/Assets/Prefabs/PlayerPrefab.prefab
+BettingGame_clone_0/Assets/Prefabs/PlayerPrefab.prefab.meta
+BettingGame_clone_0/Assets/Resources/Materials.meta
+BettingGame_clone_0/Assets/Resources/Materials/ChipMaterial.mat
+BettingGame_clone_0/Assets/Resources/Materials/ChipMaterial.mat.meta
+BettingGame_clone_0/Assets/Resources/Materials/TableMaterial.mat
+BettingGame_clone_0/Assets/Resources/Materials/TableMaterial.mat.meta
+BettingGame_clone_0/Assets/Scenes/GameScene.unity
+BettingGame_clone_0/Assets/Scenes/GameScene.unity.meta
+BettingGame_clone_0/Assets/Scripts/BetManager.cs
+BettingGame_clone_0/Assets/Scripts/BetManager.cs.meta
+BettingGame_clone_0/Assets/Scripts/BetObject.cs
+BettingGame_clone_0/Assets/Scripts/BetObject.cs.meta
+BettingGame_clone_0/Assets/Scripts/ChipManager.cs
+BettingGame_clone_0/Assets/Scripts/ChipManager.cs.meta
+BettingGame_clone_0/Assets/Scripts/ChipStack.cs
+BettingGame_clone_0/Assets/Scripts/ChipStack.cs.meta
+BettingGame_clone_0/Assets/Scripts/ClientNetworkTransform.cs
+BettingGame_clone_0/Assets/Scripts/ClientNetworkTransform.cs.meta
+BettingGame_clone_0/Assets/Scripts/EventManager.cs
+BettingGame_clone_0/Assets/Scripts/EventManager.cs.meta
+BettingGame_clone_0/Assets/Scripts/GameManager.cs
+BettingGame_clone_0/Assets/Scripts/GameManager.cs.meta
+BettingGame_clone_0/Assets/Scripts/Player.cs
+BettingGame_clone_0/Assets/Scripts/Player.cs.meta
+BettingGame_clone_0/Assets/Scripts/ScoreManager.cs
+BettingGame_clone_0/Assets/Scripts/ScoreManager.cs.meta
+BettingGame_clone_0/Assets/Scripts/Timer.cs
+BettingGame_clone_0/Assets/Scripts/Timer.cs.meta
+BettingGame_clone_0/Assets/Scripts/UIManager.cs
+BettingGame_clone_0/Assets/Scripts/UIManager.cs.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Documentation.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Fonts.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Resources.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Sprites.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Documentation/TextMesh Pro User Guide 2016.pdf
+BettingGame_clone_0/Assets/TextMesh Pro/Documentation/TextMesh Pro User Guide 2016.pdf.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Fonts/LiberationSans - OFL.txt
+BettingGame_clone_0/Assets/TextMesh Pro/Fonts/LiberationSans - OFL.txt.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Fonts/LiberationSans.ttf
+BettingGame_clone_0/Assets/TextMesh Pro/Fonts/LiberationSans.ttf.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/Fonts & Materials.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/Sprite Assets.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/Style Sheets.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/TMP Settings.asset
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/TMP Settings.asset.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Drop Shadow.mat
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Drop Shadow.mat.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Outline.mat
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Outline.mat.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/Sprite Assets/EmojiOne.asset
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/Sprite Assets/EmojiOne.asset.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/Style Sheets/Default Style Sheet.asset
+BettingGame_clone_0/Assets/TextMesh Pro/Resources/Style Sheets/Default Style Sheet.asset.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF SSD.shader
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF SSD.shader.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF.shader
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF.shader.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_Sprite.shader
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMP_Sprite.shader.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMPro.cginc
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMPro.cginc.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc
+BettingGame_clone_0/Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Sprites/EmojiOne Attribution.txt
+BettingGame_clone_0/Assets/TextMesh Pro/Sprites/EmojiOne Attribution.txt.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Sprites/EmojiOne.json
+BettingGame_clone_0/Assets/TextMesh Pro/Sprites/EmojiOne.json.meta
+BettingGame_clone_0/Assets/TextMesh Pro/Sprites/EmojiOne.png
+BettingGame_clone_0/Assets/TextMesh Pro/Sprites/EmojiOne.png.meta
+BettingGame_clone_0/Packages/manifest.json
+BettingGame_clone_0/Packages/packages-lock.json
+BettingGame_clone_0/ProjectSettings/AudioManager.asset
+BettingGame_clone_0/ProjectSettings/boot.config
+BettingGame_clone_0/ProjectSettings/BurstAotSettings_StandaloneWindows.json
+BettingGame_clone_0/ProjectSettings/ClusterInputManager.asset
+BettingGame_clone_0/ProjectSettings/CommonBurstAotSettings.json
+BettingGame_clone_0/ProjectSettings/DynamicsManager.asset
+BettingGame_clone_0/ProjectSettings/EditorBuildSettings.asset
+BettingGame_clone_0/ProjectSettings/EditorSettings.asset
+BettingGame_clone_0/ProjectSettings/GraphicsSettings.asset
+BettingGame_clone_0/ProjectSettings/InputManager.asset
+BettingGame_clone_0/ProjectSettings/MemorySettings.asset
+BettingGame_clone_0/ProjectSettings/NavMeshAreas.asset
+BettingGame_clone_0/ProjectSettings/PackageManagerSettings.asset
+BettingGame_clone_0/ProjectSettings/Physics2DSettings.asset
+BettingGame_clone_0/ProjectSettings/PresetManager.asset
+BettingGame_clone_0/ProjectSettings/ProjectSettings.asset
+BettingGame_clone_0/ProjectSettings/ProjectVersion.txt
+BettingGame_clone_0/ProjectSettings/QualitySettings.asset
+BettingGame_clone_0/ProjectSettings/SceneTemplateSettings.json
+BettingGame_clone_0/ProjectSettings/TagManager.asset
+BettingGame_clone_0/ProjectSettings/TimeManager.asset
+BettingGame_clone_0/ProjectSettings/UnityConnectSettings.asset
+BettingGame_clone_0/ProjectSettings/VersionControlSettings.asset
+BettingGame_clone_0/ProjectSettings/VFXManager.asset
+BettingGame_clone_0/ProjectSettings/XRSettings.asset
+BettingGame_clone_0/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
+BettingGame_clone_0/UserSettings/EditorUserSettings.asset
+BettingGame_clone_0/UserSettings/Layouts/default-2021.dwlt
