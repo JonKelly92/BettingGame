@@ -70,9 +70,9 @@ public class ScoreManager : NetworkBehaviour
     // decrease the amount of chips being bet
     private void OnBetDecrease()
     {
-        if (_chipCount <= 0)
+        if (_currentWager <= 0)
         {
-            _chipCount = 0;
+            _currentWager = 0;
             return;
         }
 
