@@ -17,7 +17,6 @@ public class GameManager : NetworkBehaviour
 
     [SerializeField] private GameObject _bettingButtonsPanel;
 
-    //private NetworkVariable<int> _playersSpawned = new NetworkVariable<int>(0);
     private int _playersSpawned;
 
     public Transform PlayerOnePosition { get { return _playerOnePosition; } }

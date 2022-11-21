@@ -21,10 +21,11 @@ public class ChipManager : NetworkBehaviour
 
     private float _stackWidth;
 
-
     private void Awake()
     {
         EventManager.OnSpawnChips += OnSpawnChips;
+        // EventManager.OnChipCountChanged += OnChipCountChanged;
+        EventManager.OnUpdateChipStacks += OnUpdateChipStacks;
 
         _chipStackList = new List<NetworkObject>();
 
@@ -35,16 +36,15 @@ public class ChipManager : NetworkBehaviour
             _stackWidth = renderer.bounds.size.x;
 
         // DEBUG -------------------------------------
-        EventManager.OnBetMade += EventManager_OnBetMade;
+        // EventManager.OnBetMade += EventManager_OnBetMade;
     }
-
 
     //DEBUG ------------------------
-    private void EventManager_OnBetMade(ColorBet obj)
-    {
-        if (IsOwner)
-            HideChipsServerRPC(1);
-    }
+    //private void EventManager_OnBetMade(ColorBet obj)
+    //{
+    //    if (IsOwner)
+    //        HideChipsServerRPC(1);
+    //}
     // ------------------------
 
     public override void OnDestroy()
@@ -52,6 +52,17 @@ public class ChipManager : NetworkBehaviour
         base.OnDestroy();
 
         EventManager.OnSpawnChips -= OnSpawnChips;
+        // EventManager.OnChipCountChanged -= OnChipCountChanged;
+        EventManager.OnUpdateChipStacks -= OnUpdateChipStacks;
+    }
+
+    // The player has either won or lost chips
+    private void OnUpdateChipStacks(int newChipCount)
+    {
+        if (!IsOwner)
+            return;
+
+        UpdateChipsServerRpc(newChipCount, _chipSpawnRefrencePoint_A.position, GetXDirection());
     }
 
     private void OnSpawnChips(int amountOfChips)
@@ -59,16 +70,8 @@ public class ChipManager : NetworkBehaviour
         if (!IsOwner)
             return;
 
-        Vector3 directionVector = _chipSpawnRefrencePoint_B.position - _chipSpawnRefrencePoint_A.position;
-
-        float xDirection;
-        if (directionVector.x > 0)
-            xDirection = 1;
-        else
-            xDirection = -1;
-
         int amountOfStacks = amountOfChips / 10;
-        SpawnChipsServerRPC(amountOfStacks, _chipSpawnRefrencePoint_A.position, xDirection);
+        SpawnChipsServerRPC(amountOfStacks, _chipSpawnRefrencePoint_A.position, GetXDirection());
     }
 
     [ServerRpc]
@@ -83,13 +86,37 @@ public class ChipManager : NetworkBehaviour
     }
 
     [ServerRpc]
-    private void HideChipsServerRPC(int amountOfStacks)
+    private void UpdateChipsServerRpc(int newChipCount, Vector3 referencePoint_A, float xDirection)
     {
-        int i = 0;
-        while (i < amountOfStacks)
+        // DEBUG -----------------------------------------------------
+        Debug.Log("Update Chips : " + newChipCount.ToString());
+
+        int stackCount = newChipCount / 10;
+
+        if (_chipStackList.Count == stackCount)
+            return;
+        else if (_chipStackList.Count < stackCount)
         {
-            DespawnChipStack();
-            i++;
+            // amount of stacks to spawn
+            stackCount = stackCount - _chipStackList.Count;
+
+            int i = 0;
+            while (i < stackCount)
+            {
+                SpawnChips(referencePoint_A, xDirection);
+                i++;
+            }
+        }
+        else if (_chipStackList.Count > stackCount)
+        {
+            // amount of stacks to despawn
+            stackCount = _chipStackList.Count - stackCount;
+            int i = 0;
+            while (i < stackCount)
+            {
+                DespawnChipStack();
+                i++;
+            }
         }
     }
 
@@ -142,5 +169,17 @@ public class ChipManager : NetworkBehaviour
         var stack = _chipStackList.Last();
         _chipStackList.Remove(stack);
         stack.Despawn();
+    }
+
+    private float GetXDirection()
+    {
+        Vector3 directionVector = _chipSpawnRefrencePoint_B.position - _chipSpawnRefrencePoint_A.position;
+        float xDirection;
+        if (directionVector.x > 0)
+            xDirection = 1;
+        else
+            xDirection = -1;
+
+        return xDirection;
     }
 }

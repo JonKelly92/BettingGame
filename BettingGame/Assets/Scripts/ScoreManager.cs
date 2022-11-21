@@ -1,6 +1,7 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class ScoreManager : MonoBehaviour
+public class ScoreManager : NetworkBehaviour
 {
     private const int WagerIncrements = 10;
 
@@ -16,8 +17,10 @@ public class ScoreManager : MonoBehaviour
         EventManager.OnBetIncrease += OnBetIncrease;
     }
 
-    private void OnDestroy()
+    public override void OnDestroy()
     {
+        base.OnDestroy();
+
         EventManager.OnAllPlayersConnected -= OnAllPlayersConnected;
         EventManager.OnBettingResult -= OnBettingResult;
         EventManager.OnBetDecrease -= OnBetDecrease;
@@ -69,10 +72,23 @@ public class ScoreManager : MonoBehaviour
         UpdateWagerAmount(_currentWager - WagerIncrements);
     }
 
-    private void UpdateChipCount() => EventManager.ChipCountChanged(_chipCount);
+    private void UpdateChipCount()
+    {
+        EventManager.ChipCountChanged(_chipCount);
+        EventManager.UpdateChipStacks(_chipCount);
+
+        //if (IsServer)
+        //    UpdateChipStacksClientRpc(_chipCount);
+    }
     private void UpdateWagerAmount(int newWager)
     {
         _currentWager = newWager;
         EventManager.WagerAmountChanged(_currentWager);
     }
+
+    //[ClientRpc]
+    //private void UpdateChipStacksClientRpc(int amountOfChips)
+    //{
+    //    EventManager.UpdateChipStacks(amountOfChips);
+    //}
 }
