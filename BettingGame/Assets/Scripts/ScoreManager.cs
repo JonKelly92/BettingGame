@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    private const int StartingChips = 100;
     private const int WagerIncrements = 10;
 
     private int _currentWager;
@@ -27,7 +26,7 @@ public class ScoreManager : MonoBehaviour
 
     private void OnAllPlayersConnected()
     {
-        _chipCount = StartingChips;
+        _chipCount = GameManager.StartingChips;
         UpdateChipCount();
         UpdateWagerAmount(WagerIncrements);
     }
@@ -39,7 +38,7 @@ public class ScoreManager : MonoBehaviour
             _chipCount -= _currentWager;
 
             if (_chipCount <= 0)
-                _chipCount = StartingChips;
+                _chipCount = GameManager.StartingChips;
         }
         else
             _chipCount += _currentWager;

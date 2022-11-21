@@ -34,11 +34,20 @@ public class Player : NetworkBehaviour
         else
         {
             transform.SetPositionAndRotation(GameManager.Instance.PlayerTwoPosition.position, GameManager.Instance.PlayerTwoPosition.rotation);
-            //_chipSpawnRefrencePoint.transform.position = new Vector3(
-            //    _chipSpawnRefrencePoint.transform.position.x,
-            //    _chipSpawnRefrencePoint.transform.position.y,
-            //    _chipSpawnRefrencePoint.transform.position.z * -1f);
+            _chipSpawnRefrencePoint.transform.position = new Vector3(
+                _chipSpawnRefrencePoint.transform.position.x,
+                _chipSpawnRefrencePoint.transform.position.y,
+                _chipSpawnRefrencePoint.transform.position.z * -1f);
         }
+
+        if (IsOwner)
+            OnPlayerReadyServerRpc();
+    }
+
+    [ServerRpc]
+    private void OnPlayerReadyServerRpc()
+    {
+        EventManager.PlayerReady();
     }
 
     private void OnBetColorChanged(ColorBet bet)

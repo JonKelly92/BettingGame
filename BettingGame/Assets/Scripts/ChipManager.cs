@@ -52,19 +52,22 @@ public class ChipManager : NetworkBehaviour
         EventManager.OnSpawnChips -= OnSpawnChips;
     }
 
-    private void OnSpawnChips()
+    private void OnSpawnChips(int amountOfChips)
     {
-        if (IsOwner)
-            SpawnChipsServerRPC(10);
+        if (!IsOwner)
+            return;
+
+        int amountOfStacks = amountOfChips / 10;
+        SpawnChipsServerRPC(amountOfStacks, _chipSpawnRefrencePoint.position);
     }
 
     [ServerRpc]
-    private void SpawnChipsServerRPC(int amountOfStacks)
+    private void SpawnChipsServerRPC(int amountOfStacks, Vector3 referencePoint)
     {
         int i = 0;
         while (i < amountOfStacks)
         {
-            SpawnChips();
+            SpawnChips(referencePoint);
             i++;
         }
     }
@@ -80,14 +83,14 @@ public class ChipManager : NetworkBehaviour
         }
     }
 
-    private void SpawnChips()
+    private void SpawnChips(Vector3 referencePoint)
     {
         Vector3 spawnPosition;
 
         if (_chipStackList.Count == 0)
         {
             // spawn first stack here -> _chipSpawnRefrencePoint
-            spawnPosition = _chipSpawnRefrencePoint.position;
+            spawnPosition = referencePoint;
         }
         else
         {
@@ -110,9 +113,9 @@ public class ChipManager : NetworkBehaviour
                 int numberOfRows = (int)(_chipStackList.Count / MaxStacksPerRow);
                 float distanceForward = (numberOfRows * _stackWidth) + (numberOfRows * StackSpacing);
                 spawnPosition = new Vector3(
-                    _chipSpawnRefrencePoint.position.x + distanceForward,
-                    _chipSpawnRefrencePoint.position.y,
-                    _chipSpawnRefrencePoint.position.z);
+                    referencePoint.x + distanceForward,
+                    referencePoint.y,
+                    referencePoint.z);
             }
         }
 

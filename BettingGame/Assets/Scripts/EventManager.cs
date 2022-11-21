@@ -4,10 +4,12 @@ public static class EventManager
 {
     public static event Action OnAllPlayersConnected;
     public static event Action OnTimerEnded;
-    public static event Action OnSpawnChips;
+    public static event Action<int> OnSpawnChips;
+    public static event Action OnPlayerReady;
     public static void AllPlayersConnected() => OnAllPlayersConnected?.Invoke();
     public static void TimerEnded() => OnTimerEnded?.Invoke();
-    public static void SpawnChips() => OnSpawnChips?.Invoke();
+    public static void SpawnChips(int amountOfChips) => OnSpawnChips?.Invoke(amountOfChips);
+    public static void PlayerReady() => OnPlayerReady?.Invoke();
 
 
     // BETTING
