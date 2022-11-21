@@ -4,8 +4,8 @@ public static class EventManager
 {
     public static event Action OnAllPlayersConnected;
     public static event Action OnTimerEnded;
-    public static event Action<int> OnSpawnChips;
-    public static event Action OnPlayerReady;
+    public static event Action<int> OnSpawnChips; // The primary use for this is spawn the chips stacks are the start of the game, to update a players chips stacks on the table to match the chips they own use OnChipCountChanged
+    public static event Action OnPlayerReady; // When a player is spawned and they are ready to have their chips spawned
     public static void AllPlayersConnected() => OnAllPlayersConnected?.Invoke();
     public static void TimerEnded() => OnTimerEnded?.Invoke();
     public static void SpawnChips(int amountOfChips) => OnSpawnChips?.Invoke(amountOfChips);
@@ -18,8 +18,8 @@ public static class EventManager
     public static event Action<ColorBet> OnBetColorChanged; // this is what the player currently has selected as their bet
     public static event Action OnBetDecrease;
     public static event Action OnBetIncrease;
-    public static event Action<int> OnChipCountChanged;
-    public static event Action<int> OnWagerAmountChanged;
+    public static event Action<int> OnChipCountChanged; // This passes the updated amount of chips the player has
+    public static event Action<int> OnWagerAmountChanged; // This passes the updated amount of chips the player is wagering
     public static void BettingResult(BettingResult result) => OnBettingResult?.Invoke(result);
     public static void BetMade(ColorBet colorBet) => OnBetMade?.Invoke(colorBet);
     public static void BetColorChanged(ColorBet colorBet) => OnBetColorChanged?.Invoke(colorBet);

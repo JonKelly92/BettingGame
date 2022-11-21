@@ -83,7 +83,7 @@ public class GameManager : NetworkBehaviour
         EventManager.AllPlayersConnected();
     }
 
-    // When a client connects it then positions its character, so when this is done and they are ready then we spawn the chips for everyone
+    // When a client connects their character is positioned at the table, so when this is done and they are ready then we spawn the chips for everyone
     private void OnPlayerReady()
     {
         _playersSpawned++;
