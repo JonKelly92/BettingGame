@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
@@ -22,6 +23,8 @@ public class ChipManager : NetworkBehaviour
     private const float StackSpacing = 0.1f;
 
     private List<NetworkObject> _chipStackList;
+    // the despawn list is used for object pooling, just grab a stack from here instead of spawning a new one
+    private List<NetworkObject> _despawnedChipStackList; 
 
     // width of the stack prefab, used to determine how far apart the stacks should be spawned
     private float _stackWidth;
@@ -31,6 +34,7 @@ public class ChipManager : NetworkBehaviour
         EventManager.OnUpdateChipStacks += OnUpdateChipStacks;
 
         _chipStackList = new List<NetworkObject>();
+        _despawnedChipStackList = new List<NetworkObject>();
 
         var renderer = _chipStackPrefab.GetComponentInChildren<Renderer>();
         if (renderer == null)
@@ -54,19 +58,6 @@ public class ChipManager : NetworkBehaviour
         UpdateChipsServerRpc(newChipCount, _chipSpawnRefrencePoint_A.position, GetXDirection());
     }
 
-    // Asking the server to spawn our intial set of chip stacks
-    [ServerRpc]
-    private void SpawnChipsServerRPC(int amountOfStacks, Vector3 referencePoint_A, float xDirection)
-    {
-        int i = 0;
-        while (i < amountOfStacks)
-        {
-            SpawnChips(referencePoint_A, xDirection);
-            i++;
-        }
-    }
-
-
     // Asking the server to update our stacks of chips to match our chip count
     [ServerRpc]
     private void UpdateChipsServerRpc(int newChipCount, Vector3 referencePoint_A, float xDirection)
@@ -79,8 +70,35 @@ public class ChipManager : NetworkBehaviour
         {
             // amount of stacks to spawn
             stackCount = stackCount - _chipStackList.Count;
-
             int i = 0;
+
+            if (_despawnedChipStackList.Count() > 0)
+            {
+                int spawnCount = 0;
+
+                if (stackCount > _despawnedChipStackList.Count())
+                    spawnCount = _despawnedChipStackList.Count();// use all the despawned stacks and then spawn more
+                else
+                    spawnCount = stackCount; // all the stack we need can come from the despawn list
+
+                stackCount -= _despawnedChipStackList.Count(); // the amount of stacks we need is reduced because we're grabbing them from the despawn list
+
+                NetworkObject stack;
+
+                while (i < spawnCount)
+                {
+                    // move the despawned stack back to the spawned list and show it to the players
+                    stack = _despawnedChipStackList.Last();
+                    _despawnedChipStackList.Remove(stack);
+                    _chipStackList.Add(stack);
+                    stack.gameObject.SetActive(true);
+                    stack.Spawn(true);
+
+                    i++;
+                }
+            }
+
+            i = 0;
             while (i < stackCount)
             {
                 SpawnChips(referencePoint_A, xDirection);
@@ -146,12 +164,14 @@ public class ChipManager : NetworkBehaviour
         _chipStackList.Add(spawnedObject);
     }
 
-    // stacks we no longer need get removed from the list and from the game
     private void DespawnChipStack()
     {
+        // move the stack from the spawned list to the despawned list and hide it from the players
         var stack = _chipStackList.Last();
         _chipStackList.Remove(stack);
-        stack.Despawn();
+        _despawnedChipStackList.Add(stack);
+        stack.gameObject.SetActive(false); 
+        stack.Despawn(false);
     }
 
     // using _chipSpawnRefrencePoint_B and _chipSpawnRefrencePoint_A to determine which direction is the center of the table
