@@ -1,3 +1,5 @@
 # BettingGame
 
-This project was made as a test for a job interview. I worked on this for a week. I may come back to it in the future to fix some isssues and polish it up but for now it's in the same state as I submitted it in. 
+This is a networked game (Netcode) where two players can bet on whether an object will change it's color to Red or Green. 
+
+I put this together pretty quickly, only worked on it for a week. I learned a lot about Netcode working on this. I may come back to it in the future to fix some isssues and polish it up. 
